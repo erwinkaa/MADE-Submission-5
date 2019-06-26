@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MADE Submission 3</string>
+    <string name="setting">Pengaturan</string>
+    <string name="bottom_menu_movie">Film</string>
+    <string name="bottom_menu_tvshow">Acara TV</string>
+
+    <string name="releasedate">Tanggal Rilis</string>
+    <string name="runningtime">Waktu Durasi</string>
+    <string name="productioncompanies">Perusahaan Produksi</string>
+    <string name="description">Deskripsi</string>
+    <string name="detailfilm">Film Detail</string>
+    <string name="bottom_menu_favorite">Favoritku</string>
+    <string name="TOAST_FAVORITE">Dimasukkan ke Favoritku</string>
+    <string name="TOAST_UNFAVORITE">Dihapuskan dari Favoritku</string>
+    <string name="notavail">Data tidak ada</string>
+</resources>

@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">MADE Submission 4</string>
+    <string name="setting">Setting</string>
+    <string name="bottom_menu_movie">Movie</string>
+    <string name="bottom_menu_tvshow">TV Show</string>
+
+    <string name="releasedate">Release Date</string>
+    <string name="runningtime">Running Time</string>
+    <string name="productioncompanies">Production Companies</string>
+    <string name="description">Overview</string>
+    <string name="detailfilm">Detail Film</string>
+    <string name="bottom_menu_favorite">Favorite</string>
+    <string name="TOAST_FAVORITE">Added to Favorite</string>
+    <string name="TOAST_UNFAVORITE">Removed from Favorite</string>
+    <string name="notavail">Data is not exist</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+</resources>
