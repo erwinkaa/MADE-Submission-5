@@ -2,6 +2,7 @@ package id.erwinka.madesubmission4.main.favorite.favoritemovie
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
@@ -18,6 +19,8 @@ import id.erwinka.madesubmission4.R
 import id.erwinka.madesubmission4.api.ApiRepository
 import id.erwinka.madesubmission4.main.MainActivity
 import id.erwinka.madesubmission4.main.detail.DetailActivity
+import id.erwinka.madesubmission4.main.detail.DetailActivity.Companion.INTENT_RESULT_CODE
+import id.erwinka.madesubmission4.main.favorite.FavoriteFragment.Companion.INTENT_REQUEST_CODE
 import id.erwinka.madesubmission4.main.movie.*
 import id.erwinka.madesubmission4.util.LOG_TAG
 import id.erwinka.madesubmission4.util.invisible
@@ -33,7 +36,6 @@ class FavoriteMovieFragment : Fragment(), FavoriteMovieView {
     private lateinit var progressBar: ProgressBar
     private var dataMovies = mutableListOf<MovieModel>()
     private lateinit var viewModel: FavoriteMovieViewModel
-    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,7 +48,6 @@ class FavoriteMovieFragment : Fragment(), FavoriteMovieView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         recyclerView = view.findViewById(R.id.recyclerview)
         progressBar = view.findViewById(R.id.progress_circular)
-        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout)
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -59,7 +60,10 @@ class FavoriteMovieFragment : Fragment(), FavoriteMovieView {
         recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL))
         recyclerView.layoutManager = LinearLayoutManager(context)
         adapterMovies = MovieAdapter(requireContext(), dataMovies) {
-            startActivity<DetailActivity>(MainActivity.DATA_EXTRA to it.id, MainActivity.TYPE to MainActivity.MOVIE)
+            val intent = Intent(activity, DetailActivity::class.java)
+            intent.putExtra(MainActivity.DATA_EXTRA, it.id)
+            intent.putExtra(MainActivity.TYPE, MainActivity.MOVIE)
+            startActivityForResult(intent, INTENT_REQUEST_CODE)
         }
         recyclerView.adapter = adapterMovies
 
@@ -69,11 +73,16 @@ class FavoriteMovieFragment : Fragment(), FavoriteMovieView {
             progressBar.invisible()
         }
 
-        swipeRefreshLayout.setOnRefreshListener {
-            presenter.getFavoriteMovie(requireContext())
-        }
-
         super.onActivityCreated(savedInstanceState)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == INTENT_REQUEST_CODE) {
+            if (resultCode == INTENT_RESULT_CODE) {
+                presenter.getFavoriteMovie(requireContext())
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun showLoading() {
@@ -82,7 +91,6 @@ class FavoriteMovieFragment : Fragment(), FavoriteMovieView {
 
     override fun hideLoading() {
         progressBar.invisible()
-        swipeRefreshLayout.isRefreshing = false
     }
 
     override fun processFavMovieData(data: List<MovieModel>) {

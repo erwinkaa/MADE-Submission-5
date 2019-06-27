@@ -16,9 +16,9 @@ android {
     }
     buildTypes {
         debug {
-            buildConfigField "String", "BASE_URL", "https://api.themoviedb.org/3/"
-            buildConfigField "String", "TSDB_API_KEY", "11a80a36b6fe99bfe6fe1322d3cc95b5"
-            buildConfigField "String", "IMAGE_BASE_URL", "https://image.tmdb.org/t/p/original"
+            buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3/\""
+            buildConfigField "String", "TSDB_API_KEY", "\"11a80a36b6fe99bfe6fe1322d3cc95b5\""
+            buildConfigField "String", "IMAGE_BASE_URL", "\"https://image.tmdb.org/t/p/original\""
         }
         release {
             minifyEnabled false

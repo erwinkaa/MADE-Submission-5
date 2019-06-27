@@ -24,6 +24,10 @@ class FavoriteFragment : Fragment() {
     private lateinit var tabLayout: TabLayout
     private lateinit var toolbar: Toolbar
 
+    companion object {
+        const val INTENT_REQUEST_CODE = 101
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

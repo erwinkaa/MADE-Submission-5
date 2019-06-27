@@ -1,5 +1,6 @@
 package id.erwinka.madesubmission4.main.detail
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
@@ -23,6 +24,10 @@ class DetailActivity : AppCompatActivity(), DetailFilmView {
     private var id: String = "0"
     private var posterPath: String = "url"
     private var title: String = "title"
+
+    companion object {
+        const val INTENT_RESULT_CODE = 200
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -111,6 +116,7 @@ class DetailActivity : AppCompatActivity(), DetailFilmView {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
+                onBackPressed()
                 finish()
                 true
             }
@@ -141,5 +147,10 @@ class DetailActivity : AppCompatActivity(), DetailFilmView {
             menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_white_24dp)
         else
             menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_border_white_24dp)
+    }
+
+    override fun onBackPressed() {
+        setResult(INTENT_RESULT_CODE, Intent())
+        super.onBackPressed()
     }
 }
