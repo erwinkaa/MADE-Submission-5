@@ -37,5 +37,18 @@ interface ApiService {
         @Query("language") language: String = "en-US"
     ): Call<DetailTVShowModel>
 
+    @GET("search/movie")
+    fun searchMovie(
+        @Query("api_key") api_key: String,
+        @Query("language") language: String = "en-US",
+        @Query("query") query: String
+    ): Call<MovieResponseModel>
+
+    @GET("search/tv")
+    fun searchTVShow(
+        @Query("api_key") api_key: String,
+        @Query("language") language: String = "en-US",
+        @Query("query") query: String
+    ): Call<TVShowResponseModel>
 
 }

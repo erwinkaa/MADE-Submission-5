@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -13,7 +12,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-
 import id.erwinka.madesubmission4.R
 import id.erwinka.madesubmission4.main.MainActivity
 import id.erwinka.madesubmission4.main.detail.DetailActivity
@@ -24,7 +22,7 @@ import id.erwinka.madesubmission4.main.tvshow.TVShowModel
 import id.erwinka.madesubmission4.util.invisible
 import id.erwinka.madesubmission4.util.visible
 import kotlinx.android.synthetic.main.fragment_favorite_movie.*
-import org.jetbrains.anko.support.v4.startActivity
+import org.jetbrains.anko.support.v4.startActivityForResult
 
 class FavoriteTVShowFragment : Fragment(), FavoriteTVShowView {
 
@@ -58,10 +56,11 @@ class FavoriteTVShowFragment : Fragment(), FavoriteTVShowView {
         recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL))
         recyclerView.layoutManager = LinearLayoutManager(context)
         adapterMovies = TVShowAdapter(requireContext(), dataTVShows) {
-            val intent = Intent(activity, DetailActivity::class.java)
-            intent.putExtra(MainActivity.DATA_EXTRA, it.id)
-            intent.putExtra(MainActivity.TYPE, MainActivity.TV)
-            startActivityForResult(intent, INTENT_REQUEST_CODE)
+            startActivityForResult<DetailActivity>(
+                INTENT_REQUEST_CODE,
+                MainActivity.DATA_EXTRA to it.id,
+                MainActivity.TYPE to MainActivity.TV
+            )
         }
         recyclerView.adapter = adapterMovies
 

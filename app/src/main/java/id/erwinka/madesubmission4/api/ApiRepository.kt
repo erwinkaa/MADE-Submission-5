@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiRepository {
 
-    var BASE_URL: String = BuildConfig.BASE_URL
+    private var BASE_URL: String = BuildConfig.BASE_URL
     var API_KEY: String = BuildConfig.TSDB_API_KEY
     var BASE_IMAGE_URL: String = BuildConfig.IMAGE_BASE_URL
 

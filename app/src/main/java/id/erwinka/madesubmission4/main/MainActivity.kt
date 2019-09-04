@@ -1,17 +1,17 @@
 package id.erwinka.madesubmission4.main
 
-import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.Settings
+import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import id.erwinka.madesubmission4.R
 import id.erwinka.madesubmission4.main.favorite.FavoriteFragment
 import id.erwinka.madesubmission4.main.movie.MovieFragment
 import id.erwinka.madesubmission4.main.tvshow.TVShowFragment
-import id.erwinka.madesubmission4.sqllite.database
+import id.erwinka.madesubmission4.setting.SettingActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.startActivity
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         const val TYPE = "type"
         const val DATA_EXTRA = "data"
         const val MOVIE = "movie"
-        const val TV = "tvshow"
+        const val TV = "tv"
         const val INSTANCE = "instance"
     }
 
@@ -87,13 +87,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.setting_localization -> {
-                val intent = Intent(Settings.ACTION_LOCALE_SETTINGS)
-                startActivity(intent)
+            R.id.m_setting -> {
+                startActivity<SettingActivity>()
                 true
             }
 
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onBackPressed() {
+        moveTaskToBack(true)
+        super.onBackPressed()
     }
 }

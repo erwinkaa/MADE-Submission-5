@@ -5,15 +5,9 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.support.v7.widget.*
+import android.view.*
 import android.widget.ProgressBar
-
 import id.erwinka.madesubmission4.R
 import id.erwinka.madesubmission4.api.ApiRepository
 import id.erwinka.madesubmission4.main.MainActivity
@@ -21,6 +15,7 @@ import id.erwinka.madesubmission4.main.detail.DetailActivity
 import id.erwinka.madesubmission4.util.invisible
 import id.erwinka.madesubmission4.util.visible
 import org.jetbrains.anko.support.v4.startActivity
+
 
 class MovieFragment : Fragment(), MovieView {
 
@@ -53,6 +48,8 @@ class MovieFragment : Fragment(), MovieView {
         toolbar.setTitleTextColor(resources.getColor(R.color.white))
         (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.bottom_menu_movie)
 
+        setHasOptionsMenu(true)
+
         viewModel = ViewModelProviders.of(this).get(MovieViewModel::class.java)
         viewModel.getMovies().observe(this, getMovies)
 
@@ -80,10 +77,12 @@ class MovieFragment : Fragment(), MovieView {
     }
 
     override fun showLoading() {
+        recyclerView.invisible()
         progressBar.visible()
     }
 
     override fun hideLoading() {
+        recyclerView.visible()
         progressBar.invisible()
     }
 
@@ -95,6 +94,24 @@ class MovieFragment : Fragment(), MovieView {
         if (it != null) {
             adapterMovies.setData(it.results)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        val menuItem = menu.findItem(R.id.m_search)
+        if (menuItem != null) {
+            val searchView: SearchView = menuItem.actionView as SearchView
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    presenter.searchMovie(query)
+                    return false
+                }
+
+                override fun onQueryTextChange(query: String): Boolean {
+                    return false
+                }
+            })
+        }
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
 }

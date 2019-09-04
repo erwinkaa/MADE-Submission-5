@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MADE Submission 3</string>
+    <string name="app_name">MADE Submission 5</string>
     <string name="setting">Pengaturan</string>
     <string name="bottom_menu_movie">Film</string>
     <string name="bottom_menu_tvshow">Acara TV</string>
@@ -14,4 +14,30 @@
     <string name="TOAST_FAVORITE">Dimasukkan ke Favoritku</string>
     <string name="TOAST_UNFAVORITE">Dihapuskan dari Favoritku</string>
     <string name="notavail">Data tidak ada</string>
+    <string name="search">Cari</string>
+
+    <string name="appwidget_text">Film Favoriteku</string>
+    <string name="empty_text">Tidak ada Data</string>
+
+    <string name="daily_reminder">Pengingat Film Sehari hari</string>
+    <string name="key_daily">DAILY_KEY</string>
+    <string name="release_today_reminder">Pengingat Film Rilis Hari ini</string>
+    <string name="key_release_today">RELEASE_TODAY_KEY</string>
+
+    <string name="change_language">Ganti Bahasa</string>
+
+    <string name="daily_notification_channel_id">notification_daily_channel</string>
+    <string name="daily_notification_channel_name">Daily Reminder</string>
+    <string name="release_today_notification_channel_id">notification_release_channel</string>
+    <string name="release_today_notification_channel_name">Release Today Reminder</string>
+
+    <string name="daily_subsribed">Pengingat Film Sehari hari : menyala</string>
+    <string name="daily_unsubsribed">Pengingat Film Sehari hari : mati</string>
+    <string name="release_today_subsribed">Pengingat Film Rilis Hari ini : menyala</string>
+    <string name="release_today_unsubsribed">Pengingat Film Rilis Hari ini : mati</string>
+
+    <string name="nowplaying">Sekarang Tayang : </string>
+
+    <string name="daily_notif_title">Selamat Pagi!</string>
+    <string name="daily_notif_content">Ayo cek film-film menarik hari ini!</string>
 </resources>

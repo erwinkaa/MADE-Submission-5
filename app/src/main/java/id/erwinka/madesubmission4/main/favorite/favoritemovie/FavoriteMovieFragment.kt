@@ -5,28 +5,24 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 
 import id.erwinka.madesubmission4.R
-import id.erwinka.madesubmission4.api.ApiRepository
 import id.erwinka.madesubmission4.main.MainActivity
 import id.erwinka.madesubmission4.main.detail.DetailActivity
 import id.erwinka.madesubmission4.main.detail.DetailActivity.Companion.INTENT_RESULT_CODE
 import id.erwinka.madesubmission4.main.favorite.FavoriteFragment.Companion.INTENT_REQUEST_CODE
 import id.erwinka.madesubmission4.main.movie.*
-import id.erwinka.madesubmission4.util.LOG_TAG
 import id.erwinka.madesubmission4.util.invisible
 import id.erwinka.madesubmission4.util.visible
 import kotlinx.android.synthetic.main.fragment_favorite_movie.*
-import org.jetbrains.anko.support.v4.startActivity
+import org.jetbrains.anko.support.v4.startActivityForResult
 
 class FavoriteMovieFragment : Fragment(), FavoriteMovieView {
 
@@ -60,10 +56,11 @@ class FavoriteMovieFragment : Fragment(), FavoriteMovieView {
         recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL))
         recyclerView.layoutManager = LinearLayoutManager(context)
         adapterMovies = MovieAdapter(requireContext(), dataMovies) {
-            val intent = Intent(activity, DetailActivity::class.java)
-            intent.putExtra(MainActivity.DATA_EXTRA, it.id)
-            intent.putExtra(MainActivity.TYPE, MainActivity.MOVIE)
-            startActivityForResult(intent, INTENT_REQUEST_CODE)
+            startActivityForResult<DetailActivity>(
+                INTENT_REQUEST_CODE,
+                MainActivity.DATA_EXTRA to it.id,
+                MainActivity.TYPE to MainActivity.MOVIE
+            )
         }
         recyclerView.adapter = adapterMovies
 

@@ -7,9 +7,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 
 import id.erwinka.madesubmission4.R
 import id.erwinka.madesubmission4.main.MainActivity.Companion.INSTANCE
@@ -78,5 +76,13 @@ class FavoriteFragment : Fragment() {
 
         }
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        // kok ga ngilang
+        val menuItem = menu.findItem(R.id.m_search)
+        menuItem.isVisible = false
+        menuItem.isEnabled = false
+        super.onCreateOptionsMenu(menu, inflater)
     }
 }

@@ -30,4 +30,23 @@ class MoviePresenter(
             }
         })
     }
+
+    fun searchMovie(query: String) {
+        view.showLoading()
+        apiService.searchMovie(ApiRepository.API_KEY, getLocale(), query)
+            .enqueue(object : Callback<MovieResponseModel> {
+                override fun onResponse(call: Call<MovieResponseModel>, response: Response<MovieResponseModel>) {
+                    if (response.isSuccessful) {
+                        val data = response.body()!!
+                        view.processMovieData(data)
+                    }
+                    view.hideLoading()
+                }
+
+                override fun onFailure(call: Call<MovieResponseModel>, error: Throwable) {
+                    Log.e(LOG_TAG, "${error.message}")
+                    view.hideLoading()
+                }
+            })
+    }
 }

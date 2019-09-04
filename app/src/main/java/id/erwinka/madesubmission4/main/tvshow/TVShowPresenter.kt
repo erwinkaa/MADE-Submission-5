@@ -9,7 +9,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class TVShowPresenter (
+class TVShowPresenter(
     private val view: TVShowView,
     private val apiService: ApiService
 ) {
@@ -29,5 +29,24 @@ class TVShowPresenter (
                 view.hideLoading()
             }
         })
+    }
+
+    fun searchTVShow(query: String) {
+        view.showLoading()
+        apiService.searchTVShow(ApiRepository.API_KEY, getLocale(), query)
+            .enqueue(object : Callback<TVShowResponseModel> {
+                override fun onResponse(call: Call<TVShowResponseModel>, response: Response<TVShowResponseModel>) {
+                    if (response.isSuccessful) {
+                        val data = response.body()!!
+                        view.processTVShowData(data)
+                    }
+                    view.hideLoading()
+                }
+
+                override fun onFailure(call: Call<TVShowResponseModel>, error: Throwable) {
+                    Log.e(LOG_TAG, "${error.message}")
+                    view.hideLoading()
+                }
+            })
     }
 }

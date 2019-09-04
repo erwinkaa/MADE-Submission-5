@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MADE Submission 4</string>
+    <string name="app_name">MADE Submission 5</string>
     <string name="setting">Setting</string>
     <string name="bottom_menu_movie">Movie</string>
     <string name="bottom_menu_tvshow">TV Show</string>
@@ -13,6 +14,30 @@
     <string name="TOAST_FAVORITE">Added to Favorite</string>
     <string name="TOAST_UNFAVORITE">Removed from Favorite</string>
     <string name="notavail">Data is not exist</string>
+    <string name="search">Search</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="appwidget_text">Favorite Film</string>
+    <string name="empty_text">No Data</string>
+
+    <string name="daily_reminder">Daily Reminder</string>
+    <string name="key_daily">DAILY_KEY</string>
+    <string name="release_today_reminder">Release Today Reminder</string>
+    <string name="key_release_today">RELEASE_TODAY_KEY</string>
+
+    <string name="change_language">Change Language</string>
+
+    <string name="daily_notification_channel_id">notification_daily_channel</string>
+    <string name="daily_notification_channel_name">Daily Reminder</string>
+    <string name="release_today_notification_channel_id">notification_release_channel</string>
+    <string name="release_today_notification_channel_name">Release Today Reminder</string>
+
+    <string name="daily_subsribed">Daily Reminder : On</string>
+    <string name="daily_unsubsribed">Daily Reminder : Off</string>
+    <string name="release_today_subsribed">Release Today Reminder : On</string>
+    <string name="release_today_unsubsribed">Release Today Reminder : Off</string>
+
+    <string name="nowplaying">Now Playing : </string>
+
+    <string name="daily_notif_title">Good Morning!</string>
+    <string name="daily_notif_content">Lets check awesome movies today!</string>
 </resources>

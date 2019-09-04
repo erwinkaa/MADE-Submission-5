@@ -18,6 +18,13 @@ import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import android.content.ComponentName
+import android.app.job.JobScheduler
+import android.os.Build
+import android.app.job.JobInfo
+import id.erwinka.madesubmission4.stackwidget.UpdateWidgetService
+import id.erwinka.madesubmission4.util.random
+
 
 class DetailFilmPresenter(
     private val view: DetailFilmView,
@@ -60,43 +67,54 @@ class DetailFilmPresenter(
             })
     }
 
-    fun addToFavorite(ctx: Context?, filmId: String, filmType: String, filmTitle: String, posterPath: String) {
+    fun addToFavorite(
+        ctx: Context,
+        filmId: String,
+        filmType: String,
+        filmTitle: String,
+        posterPath: String,
+        overview: String,
+        releaseDate: String
+    ) {
         try {
-            ctx?.database?.use {
+            ctx.database.use {
                 insert(
                     FavoriteDatabase.TABLE_FAVORITE,
                     FavoriteDatabase.FILM_ID to filmId,
                     FavoriteDatabase.FILM_TYPE to filmType,
                     FavoriteDatabase.FILM_TITLE to filmTitle,
-                    FavoriteDatabase.POSTER_PATH to posterPath
+                    FavoriteDatabase.POSTER_PATH to posterPath,
+                    FavoriteDatabase.OVERVIEW to overview,
+                    FavoriteDatabase.RELEASE_DATE to releaseDate
                 )
             }
-            ctx?.toast(R.string.TOAST_FAVORITE)?.show()
+            ctx.toast(R.string.TOAST_FAVORITE).show()
+            updateWidget(ctx)
         } catch (e: SQLiteConstraintException) {
-            ctx?.toast(e.localizedMessage)?.show()
+            ctx.toast(e.localizedMessage).show()
         }
     }
 
-    fun removeFromFavorite(ctx: Context?, filmId: String) {
+    fun removeFromFavorite(ctx: Context, filmId: String) {
         try {
-            ctx?.database?.use {
+            ctx.database.use {
                 delete(
                     FavoriteDatabase.TABLE_FAVORITE,
                     "(FILM_ID = {id})",
                     "id" to filmId
                 )
             }
-            ctx?.toast(R.string.TOAST_UNFAVORITE)?.show()
+            ctx.toast(R.string.TOAST_UNFAVORITE).show()
+            updateWidget(ctx)
         } catch (e: SQLiteConstraintException) {
-            Log.e("GDK", e.message)
-            ctx?.toast(e.localizedMessage)?.show()
+            ctx.toast(e.localizedMessage).show()
         }
     }
 
-    fun favoriteState(ctx: Context?, filmId: String): Boolean {
+    fun favoriteState(ctx: Context, filmId: String): Boolean {
         var isFavorited = false
 
-        ctx?.database?.use {
+        ctx.database.use {
             val result = select(FavoriteDatabase.TABLE_FAVORITE)
                 .whereArgs(
                     "(FILM_ID = {id})",
@@ -109,4 +127,21 @@ class DetailFilmPresenter(
         }
         return isFavorited
     }
+
+    //TODO: WHY IT DOESN'T WORKS?! changed to click to refresh
+    private fun updateWidget(context: Context) {
+        val jobId = (0 until 200).random()
+        val millis: Long = 10000
+        val serviceComponent = ComponentName(context, UpdateWidgetService::class.java)
+        val builder = JobInfo.Builder(jobId, serviceComponent)
+        builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_NONE)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            builder.setMinimumLatency(millis)
+        } else {
+            builder.setPeriodic(millis)
+        }
+        val jobScheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
+        jobScheduler.schedule(builder.build())
+    }
+
 }

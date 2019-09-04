@@ -1,9 +1,9 @@
 package id.erwinka.madesubmission4.main.detail
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.bumptech.glide.Glide
@@ -24,6 +24,8 @@ class DetailActivity : AppCompatActivity(), DetailFilmView {
     private var id: String = "0"
     private var posterPath: String = "url"
     private var title: String = "title"
+    private var overview: String = "overview"
+    private var releaseDate: String = "release_date"
 
     companion object {
         const val INTENT_RESULT_CODE = 200
@@ -37,8 +39,8 @@ class DetailActivity : AppCompatActivity(), DetailFilmView {
 
         supportActionBar?.title = resources.getString(R.string.detailfilm)
 
-        type = intent.getStringExtra(MainActivity.TYPE)
         id = intent.getStringExtra(MainActivity.DATA_EXTRA)
+        type = intent.getStringExtra(MainActivity.TYPE)
 
         val service = ApiRepository.create()
         presenter = DetailFilmPresenter(this, service)
@@ -82,6 +84,8 @@ class DetailActivity : AppCompatActivity(), DetailFilmView {
 
         title = data.title
         posterPath = data.poster_path
+        overview = data.overview
+        releaseDate = data.release_date
     }
 
     override fun processTVShowData(data: DetailTVShowModel) {
@@ -104,6 +108,8 @@ class DetailActivity : AppCompatActivity(), DetailFilmView {
 
         title = data.name
         posterPath = data.poster_path
+        overview = data.overview
+        releaseDate = data.first_air_date
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -123,12 +129,16 @@ class DetailActivity : AppCompatActivity(), DetailFilmView {
 
             R.id.add_to_favorite -> {
                 if (isFavorite) {
-                    presenter.removeFromFavorite(this, id)
-                    isFavorite = !isFavorite
-                    setFavorite()
+                    if (id != "0" && type != "type" && posterPath != "url") {
+                        presenter.removeFromFavorite(this, id)
+                        isFavorite = !isFavorite
+                        setFavorite()
+                    } else {
+                        toast(R.string.notavail)
+                    }
                 } else {
-                    if (id != "0" && title != "title" && type != "type" && posterPath != "url") {
-                        presenter.addToFavorite(this, id, type, title, posterPath)
+                    if (id != "0" && type != "type" && posterPath != "url") {
+                        presenter.addToFavorite(this, id, type, title, posterPath, overview, releaseDate)
                         isFavorite = !isFavorite
                         setFavorite()
                     } else {

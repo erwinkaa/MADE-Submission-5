@@ -24,7 +24,9 @@ class FavoriteMoviePresenter(private val view: FavoriteMovieView) {
                 data.add(MovieModel(
                     favorite[i].filmId,
                     favorite[i].filmTitle,
-                    favorite[i].posterPath
+                    favorite[i].posterPath,
+                    favorite[i].overview,
+                    favorite[i].releaseDate
                 ))
             }
         }

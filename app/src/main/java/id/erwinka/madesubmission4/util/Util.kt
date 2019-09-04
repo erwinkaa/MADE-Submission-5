@@ -3,7 +3,7 @@ package id.erwinka.madesubmission4.util
 import android.view.View
 import java.util.*
 
-var LOG_TAG = "MADE3"
+var LOG_TAG = "MADE5"
 
 fun View.visible() {
     visibility = View.VISIBLE
@@ -23,3 +23,6 @@ fun getLocale() : String {
     }
     return language
 }
+
+fun IntRange.random() =
+    Random().nextInt((endInclusive + 1) - start) + start
